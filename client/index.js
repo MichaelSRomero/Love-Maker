@@ -42,17 +42,41 @@ function loveScoreGenerator(name, crushName) {
 
 const scoreTag = document.querySelector(".results-output-container__score");
 const snippetTag = document.querySelector(".results-output-container__snippet");
+const backButtonTag = document.querySelector('.back-btn--display')
+const mainTag = document.querySelector('.main')
+const resultsContainerTag = document.querySelector('.results-container--display')
+const nameFormTagDisplay = document.querySelector('.name-form--display')
+const heartImageTag = document.querySelector('.results-img--display')
 const nameForm = document.querySelector(".name-form");
 
 nameForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    const userName = event.target["user-name"].value;
-    const crushName = event.target["crush-name"].value;
+    const userNameTag = event.target["user-name"];
+    const crushNameTag = event.target["crush-name"];
+    const userName = userNameTag.value;
+    const crushName = crushNameTag.value;
+    userNameTag.value = "";
+    crushNameTag.value = "";
+
     const calculatorOutput = loveScoreGenerator(userName, crushName);
     scoreTag.textContent = calculatorOutput.score;
     snippetTag.textContent = calculatorOutput.snippet;
-    
+    // Setting content for icebreaker
     const iceBreakerTag = document.querySelector(".icebreaker-container__text");
     const iceBreakerString = iceBreakers[Math.floor(Math.random() * 5)];
     iceBreakerTag.textContent = iceBreakerString;
+
+    mainTag.style.background = "none";
+    resultsContainerTag.style.display = "inherit";
+    heartImageTag.style.display = "inherit";
+    backButtonTag.style.display = "inherit";
+    nameFormTagDisplay.style.display = "none";
+})
+
+backButtonTag.addEventListener("click", (e) => {
+    resultsContainerTag.style.display = "none";
+    heartImageTag.style.display = "none";
+    backButtonTag.style.display = "none";
+    mainTag.style.background = "rgb(255, 19, 110)";
+    nameFormTagDisplay.style.display = "inherit";
 })
