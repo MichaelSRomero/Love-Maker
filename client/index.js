@@ -18,7 +18,13 @@ const iceBreakers = {
     1: `Aside from being sexy, what do you do for a living?`,
     2: `Are you related to Jean-Claude Van Damme? Because Jean-Claude Van Damme you’re sexy!`,
     3: `Baby, if you were words on a page, you’d be fine print`,
-    4: `Something’s wrong with my eyes, because I can’t take them off you`
+    4: `Something’s wrong with my eyes, because I can’t take them off you`,
+    5: `But the heart's not like a box that gets filled up. It expands in size the more you love.`,
+    6: `If you stood in front of the mirror and held up eleven red roses you would see twelve of the most beautiful things you could ever see.`,
+    7: `I just wanted to show this rose how incredibly beautiful you are.`,
+    8: `I think the gaps between my fingers were meant for yours.`,
+    9: `Are you as beautiful on the inside as you are on the outside?`,
+    10: `How can other people love when I'm using the world's supply on you?`,
 }
 
 // -------------------GLOBAL SELECTORS-------------------- //
@@ -53,24 +59,31 @@ nameForm.addEventListener("submit", (event) => {
     const crushNameTag = event.target["crush-name"];
     const userName = userNameTag.value;
     const crushName = crushNameTag.value;
-    // upon submission resetting the input values to empty
-    userNameTag.value = "";
-    crushNameTag.value = "";
-    // generating a score and rendering it dynamically
-    const calculatorOutput = loveScoreGenerator(userName, crushName);
-    scoreTag.textContent = calculatorOutput.score;
-    snippetTag.textContent = calculatorOutput.snippet;
-    // Setting content for icebreaker
-    const iceBreakerTag = document.querySelector(".icebreaker-container__text");
-    const iceBreakerString = iceBreakers[Math.floor(Math.random() * 5)];
-    iceBreakerTag.textContent = iceBreakerString;
-    // hiding the main screen and displaying the results screen
-    mainTag.style.background = "none";
-    resultsContainerTag.style.display = "inherit";
-    heartImageTag.style.display = "inherit";
-    backButtonTag.style.display = "inherit";
-    nameFormTagDisplay.style.display = "none";
-    logoTag.style.display = "none";
+    if (userName.length > 0 && crushName > 0) {
+        // upon submission resetting the input values to empty
+        userNameTag.value = "";
+        crushNameTag.value = "";
+        // generating a score and rendering it dynamically
+        const calculatorOutput = loveScoreGenerator(userName, crushName);
+        scoreTag.textContent = calculatorOutput.score;
+        snippetTag.textContent = `"${calculatorOutput.snippet}"`;
+        // Setting content for icebreaker
+        const iceBreakerTag = document.querySelector(".icebreaker-container__text");
+        const iceBreakerString = iceBreakers[Math.floor(Math.random() * 10)];
+        iceBreakerTag.textContent = iceBreakerString;
+        // hiding the main screen and displaying the results screen
+        mainTag.style.background = "none";
+        resultsContainerTag.style.display = "inherit";
+        heartImageTag.style.display = "inherit";
+        backButtonTag.style.display = "inherit";
+        nameFormTagDisplay.style.display = "none";
+        logoTag.style.display = "none";
+    } else {
+        userNameTag.classList.add("apply-shake")
+        crushNameTag.classList.add("apply-shake")
+        removeAnimation(userNameTag)
+        removeAnimation(crushNameTag)
+    }
 })
 
 /*
@@ -86,3 +99,7 @@ backButtonTag.addEventListener("click", (e) => {
     nameFormTagDisplay.style.display = "inherit";
     logoTag.style.display = "inherit";
 })
+
+function removeAnimation(node) {
+  node.addEventListener("animationend", (e) => node.classList.remove("apply-shake"))
+}
