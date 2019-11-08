@@ -21,7 +21,7 @@ class RandomArray {
               this.newArray[1] = synArray[randomIndex]
             }
             resolve(this.newArray)
-          })
+          }) 
           .catch(error => {
             // Print out the error if any
             console.log(`ERROR FOR: ${this.newArray[1]}`, error);
